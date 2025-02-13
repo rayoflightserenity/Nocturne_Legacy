@@ -11,10 +11,12 @@ DELETED_NICKS_FILE = "deleted_nicknames.txt"  # Файл с удалёнными
 # Доступные группы
 AVAILABLE_GROUPS = ["Администраторы", "Участники", "Черный список"]
 
+
 # Функция для добавления истории
 def add_history(action):
     with open(HISTORY_FILE, "a", encoding="utf-8") as file:
         file.write(action + "\n")
+
 
 # Показать историю действий
 def show_history():
@@ -29,6 +31,7 @@ def show_history():
                 print("История пуста.")
     else:
         print("История еще не была записана.")
+
 
 # Показать весь список ников, исключая удалённые вручную
 def show_all_nicknames():
@@ -52,6 +55,7 @@ def show_all_nicknames():
     else:
         print("Нет сохраненных пользователей.")
 
+
 # Сортировка списка ников
 def sort_nicknames():
     print("\nСортировка ников по алфавиту:")
@@ -67,12 +71,14 @@ def sort_nicknames():
     else:
         print("Нет сохраненных пользователей.")
 
+
 # Функция проверки, содержит ли ник знак "@"
 def is_valid_nickname(nickname):
     if "@" not in nickname:
         print("Никнейм должен содержать символ '@'. Попробуйте снова.")
         return False
     return True
+
 
 # Проверка, существует ли уже ник в группе
 def is_nickname_exists(nickname, group_file):
@@ -82,6 +88,7 @@ def is_nickname_exists(nickname, group_file):
             if existing_nick.strip() == nickname:
                 return True
     return False
+
 
 # Добавить ник в группу
 def add_nickname():
@@ -135,6 +142,7 @@ def add_nickname():
 
     print(f"Ник '{nickname}' сохранён в группе '{group}'.")
 
+
 # Найти ник
 def find_nickname():
     nickname = input("Введите никнейм для поиска: ").strip()
@@ -177,6 +185,7 @@ def find_nickname():
     if not found:
         print("Такого участника нету.")
 
+
 # Удалить ник
 def delete_nickname():
     nickname = input("Введите никнейм для удаления: ").strip()
@@ -208,6 +217,7 @@ def delete_nickname():
     else:
         print("Такого ника нету.")
 
+
 # Удалить историю
 def delete_history():
     password = input("Введите пароль для удаления истории: ").strip()
@@ -217,6 +227,25 @@ def delete_history():
         print("История удалена.")
     else:
         print("Неверный пароль.")
+
+
+# Функция для удаления всей информации о никах
+def delete_all_nicknames():
+    password = input("Введите пароль для удаления всей информации о никах: ").strip()
+    if password == "0000":  # Проверка пароля
+        # Список файлов, содержащих информацию о пользователях
+        files_to_delete = [ALL_PEOPLE_FILE, ADMIN_FILE, PEOPLE_FILE, BLACK_PEOPLE_FILE]
+
+        # Удаление каждого файла
+        for file in files_to_delete:
+            if os.path.exists(file):
+                os.remove(file)
+                print(f"Файл '{file}' удалён.")
+
+        print("Вся информация о никах удалена.")
+    else:
+        print("Неверный пароль.")
+
 
 # Главное меню
 def main():
@@ -229,7 +258,8 @@ def main():
         print("5. Сортировать ники")
         print("6. Показать историю")
         print("7. Удалить историю")
-        print("8. Выйти")
+        print("8. Удалить всю информацию о никах")  # Новая опция
+        print("9. Выйти")
 
         choice = input("Введите номер действия: ").strip()
 
@@ -248,10 +278,13 @@ def main():
         elif choice == "7":
             delete_history()
         elif choice == "8":
+            delete_all_nicknames()  # Вызов новой функции
+        elif choice == "9":
             print("Выход из программы.")
             break
         else:
             print("Некорректный ввод, попробуйте снова.")
+
 
 # Запуск программы
 if __name__ == "__main__":
