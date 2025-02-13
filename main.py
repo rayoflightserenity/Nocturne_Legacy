@@ -6,6 +6,7 @@ ALL_PEOPLE_FILE = "all_people.txt"  # Все пользователи
 BLACK_PEOPLE_FILE = "black_people.txt"  # Черный список
 ADMIN_FILE = "admin.txt"  # Администраторы
 PEOPLE_FILE = "people.txt"  # Участники
+DELETED_NICKS_FILE = "deleted_nicknames.txt"  # Файл с удалёнными вручную никами
 
 # Доступные группы
 AVAILABLE_GROUPS = ["Администраторы", "Участники", "Черный список"]
@@ -29,15 +30,23 @@ def show_history():
     else:
         print("История еще не была записана.")
 
-# Показать весь список ников
+# Показать весь список ников, исключая удалённые вручную
 def show_all_nicknames():
     print("\nВесь список ников:")
     if os.path.exists(ALL_PEOPLE_FILE):
         with open(ALL_PEOPLE_FILE, "r", encoding="utf-8") as file:
             users = file.readlines()
             if users:
+                # Читаем список вручную удалённых ников
+                deleted_nicks = set()
+                if os.path.exists(DELETED_NICKS_FILE):
+                    with open(DELETED_NICKS_FILE, "r", encoding="utf-8") as deleted_file:
+                        deleted_nicks = set(deleted_file.readlines())
+
+                # Показываем только тех, кто не был удалён вручную
                 for user in users:
-                    print(user.strip())
+                    if user.strip() not in deleted_nicks:
+                        print(user.strip())
             else:
                 print("Список пользователей пуст.")
     else:
@@ -193,29 +202,11 @@ def delete_nickname():
 
     if found:
         print(f"Ник '{nickname}' удалён.")
+        # Записать ник в файл удалённых вручную ников
+        with open(DELETED_NICKS_FILE, "a", encoding="utf-8") as file:
+            file.write(f"{nickname}\n")
     else:
         print("Такого ника нету.")
-
-# Проверка и запись удаления никнейма вручную
-def check_manual_deletions():
-    # Проверяем все файлы на наличие изменений (если ник был удалён вручную)
-    all_files = [ADMIN_FILE, PEOPLE_FILE, BLACK_PEOPLE_FILE]
-    for file_name in all_files:
-        with open(file_name, "r", encoding="utf-8") as file:
-            current_nicks = set(line.strip() for line in file.readlines())
-
-        # Проверка всех записей в истории
-        if os.path.exists(HISTORY_FILE):
-            with open(HISTORY_FILE, "r", encoding="utf-8") as file:
-                history_lines = file.readlines()
-
-            for line in history_lines:
-                action = line.strip()
-                if "Добавлен" in action:
-                    nickname = action.split("'")[1]
-                    # Если ник есть в истории, но нет в файле — это значит, что его удалили вручную
-                    if nickname not in current_nicks:
-                        add_history(f"Ник '{nickname}' был удалён вручную из файла '{file_name}'.")
 
 # Удалить историю
 def delete_history():
@@ -230,8 +221,6 @@ def delete_history():
 # Главное меню
 def main():
     while True:
-        check_manual_deletions()  # Проверяем вручную удалённые ники
-
         print("\nВыберите действие:")
         print("1. Добавить ник")
         print("2. Найти ник")
