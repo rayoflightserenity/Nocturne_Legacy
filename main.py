@@ -188,7 +188,8 @@ def delete_nickname():
     # Чтение всех файлов для удаления
     for file_name, group in [(ADMIN_FILE, "Администраторы"),
                              (PEOPLE_FILE, "Участники"),
-                             (BLACK_PEOPLE_FILE, "Черный список")]:
+                             (BLACK_PEOPLE_FILE, "Черный список"),
+                             (ALL_PEOPLE_FILE, "Все пользователи")]:
         with open(file_name, "r", encoding="utf-8") as file:
             lines = file.readlines()
 
