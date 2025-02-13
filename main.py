@@ -71,6 +71,16 @@ def is_valid_nickname(nickname):
     return True
 
 
+# Проверка, существует ли уже ник в группе
+def is_nickname_exists(nickname, group_file):
+    with open(group_file, "r", encoding="utf-8") as file:
+        existing_nicks = file.readlines()
+        for existing_nick in existing_nicks:
+            if existing_nick.strip() == nickname:
+                return True
+    return False
+
+
 # Добавить ник в группу
 def add_nickname():
     nickname = input("Введите никнейм: ").strip()
@@ -97,19 +107,25 @@ def add_nickname():
             group = AVAILABLE_GROUPS[int(group_choice) - 1]
             break  # Если выбрана правильная группа, выходим из цикла
 
+    # Определяем файл для выбранной группы
+    if group == "Администраторы":
+        group_file = ADMIN_FILE
+    elif group == "Участники":
+        group_file = PEOPLE_FILE
+    elif group == "Черный список":
+        group_file = BLACK_PEOPLE_FILE
+
+    # Проверяем, существует ли уже ник в группе
+    if is_nickname_exists(nickname, group_file):
+        print(f"Ошибка: Ник '{nickname}' уже существует в группе '{group}'.")
+        return
+
     # Записываем в историю
     add_history(f"Добавлен ник '{nickname}' в группу '{group}'.")
 
     # Добавляем ник в группу
-    if group == "Администраторы":
-        with open(ADMIN_FILE, "a", encoding="utf-8") as file:
-            file.write(f"{nickname}\n")
-    elif group == "Участники":
-        with open(PEOPLE_FILE, "a", encoding="utf-8") as file:
-            file.write(f"{nickname}\n")
-    elif group == "Черный список":
-        with open(BLACK_PEOPLE_FILE, "a", encoding="utf-8") as file:
-            file.write(f"{nickname}\n")
+    with open(group_file, "a", encoding="utf-8") as file:
+        file.write(f"{nickname}\n")
 
     # Добавляем ник в общий список
     with open(ALL_PEOPLE_FILE, "a", encoding="utf-8") as file:
