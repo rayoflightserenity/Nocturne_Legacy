@@ -6,7 +6,7 @@ ALL_PEOPLE_FILE = "all_people.txt"  # Все пользователи
 BLACK_PEOPLE_FILE = "black_people.txt"  # Черный список
 ADMIN_FILE = "admin.txt"  # Администраторы
 PEOPLE_FILE = "people.txt"  # Участники
-DELETED_NICKS_FILE = "deleted_nicknames.txt"  # Файл с удалёнными вручную никами
+DELETED_NICKS_FILE = "deleted_nicknames.txt"  # Файл с удалёнными вручную никами (больше не используется)
 
 # Доступные группы
 AVAILABLE_GROUPS = ["Администраторы", "Участники", "Черный список"]
@@ -190,6 +190,7 @@ def delete_nickname():
                              (PEOPLE_FILE, "Участники"),
                              (BLACK_PEOPLE_FILE, "Черный список"),
                              (ALL_PEOPLE_FILE, "Все пользователи")]:
+
         with open(file_name, "r", encoding="utf-8") as file:
             lines = file.readlines()
 
@@ -199,13 +200,11 @@ def delete_nickname():
                     file.write(line)
                 else:
                     found = True
+                    # Записать в историю, что ник удалён из группы
                     add_history(f"Удалён ник '{nickname}' из группы '{group}'.")
 
     if found:
         print(f"Ник '{nickname}' удалён.")
-        # Записать ник в файл удалённых вручную ников
-        with open(DELETED_NICKS_FILE, "a", encoding="utf-8") as file:
-            file.write(f"{nickname}\n")
     else:
         print("Такого ника нету.")
 
