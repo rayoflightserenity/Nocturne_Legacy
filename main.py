@@ -10,10 +10,12 @@ PEOPLE_FILE = "people.txt"  # Участники
 # Доступные группы
 AVAILABLE_GROUPS = ["Администраторы", "Участники", "Черный список"]
 
+
 # Функция для добавления истории
 def add_history(action):
     with open(HISTORY_FILE, "a", encoding="utf-8") as file:
         file.write(action + "\n")
+
 
 # Показать историю действий
 def show_history():
@@ -29,6 +31,7 @@ def show_history():
     else:
         print("История еще не была записана.")
 
+
 # Показать весь список ников
 def show_all_nicknames():
     print("\nВесь список ников:")
@@ -42,6 +45,7 @@ def show_all_nicknames():
                 print("Список пользователей пуст.")
     else:
         print("Нет сохраненных пользователей.")
+
 
 # Сортировка списка ников
 def sort_nicknames():
@@ -58,9 +62,21 @@ def sort_nicknames():
     else:
         print("Нет сохраненных пользователей.")
 
+
+# Функция проверки, содержит ли ник знак "@"
+def is_valid_nickname(nickname):
+    if "@" not in nickname:
+        print("Никнейм должен содержать символ '@'. Попробуйте снова.")
+        return False
+    return True
+
+
 # Добавить ник в группу
 def add_nickname():
     nickname = input("Введите никнейм: ").strip()
+
+    if not is_valid_nickname(nickname):
+        return
 
     while True:
         # Показать список доступных групп
@@ -101,9 +117,13 @@ def add_nickname():
 
     print(f"Ник '{nickname}' сохранён в группе '{group}'.")
 
+
 # Найти ник
 def find_nickname():
     nickname = input("Введите никнейм для поиска: ").strip()
+
+    if not is_valid_nickname(nickname):
+        return
 
     found = False
 
@@ -140,9 +160,13 @@ def find_nickname():
     if not found:
         print("Такого участника нету.")
 
+
 # Удалить ник
 def delete_nickname():
     nickname = input("Введите никнейм для удаления: ").strip()
+
+    if not is_valid_nickname(nickname):
+        return
 
     found = False
     # Чтение всех файлов для удаления
@@ -165,6 +189,7 @@ def delete_nickname():
     else:
         print("Такого ника нету.")
 
+
 # Удалить историю
 def delete_history():
     password = input("Введите пароль для удаления истории: ").strip()
@@ -174,6 +199,7 @@ def delete_history():
         print("История удалена.")
     else:
         print("Неверный пароль.")
+
 
 # Главное меню
 def main():
@@ -209,6 +235,7 @@ def main():
             break
         else:
             print("Некорректный ввод, попробуйте снова.")
+
 
 # Запуск программы
 if __name__ == "__main__":
