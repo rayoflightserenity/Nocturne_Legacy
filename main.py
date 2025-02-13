@@ -4,16 +4,16 @@ import os
 HISTORY_FILE = "history.txt"  # Файл с историей действий
 ALL_PEOPLE_FILE = "all_people.txt"  # Все пользователи
 BLACK_PEOPLE_FILE = "black_people.txt"  # Черный список
+ADMIN_FILE = "admin.txt"  # Администраторы
+PEOPLE_FILE = "people.txt"  # Участники
 
 # Доступные группы
 AVAILABLE_GROUPS = ["Администраторы", "Участники", "Черный список"]
-
 
 # Функция для добавления истории
 def add_history(action):
     with open(HISTORY_FILE, "a", encoding="utf-8") as file:
         file.write(action + "\n")
-
 
 # Показать историю действий
 def show_history():
@@ -29,7 +29,6 @@ def show_history():
     else:
         print("История еще не была записана.")
 
-
 # Показать весь список ников
 def show_all_nicknames():
     print("\nВесь список ников:")
@@ -43,7 +42,6 @@ def show_all_nicknames():
                 print("Список пользователей пуст.")
     else:
         print("Нет сохраненных пользователей.")
-
 
 # Сортировка списка ников
 def sort_nicknames():
@@ -59,7 +57,6 @@ def sort_nicknames():
                 print("Список пользователей пуст.")
     else:
         print("Нет сохраненных пользователей.")
-
 
 # Добавить ник в группу
 def add_nickname():
@@ -87,57 +84,86 @@ def add_nickname():
     # Записываем в историю
     add_history(f"Добавлен ник '{nickname}' в группу '{group}'.")
 
-    # Добавляем в список всех пользователей, если не в черном списке
-    with open(BLACK_PEOPLE_FILE, "r", encoding="utf-8") as file:
-        black_list = file.readlines()
+    # Добавляем ник в группу
+    if group == "Администраторы":
+        with open(ADMIN_FILE, "a", encoding="utf-8") as file:
+            file.write(f"{nickname}\n")
+    elif group == "Участники":
+        with open(PEOPLE_FILE, "a", encoding="utf-8") as file:
+            file.write(f"{nickname}\n")
+    elif group == "Черный список":
+        with open(BLACK_PEOPLE_FILE, "a", encoding="utf-8") as file:
+            file.write(f"{nickname}\n")
 
-    if nickname not in [line.strip() for line in black_list]:
-        with open(ALL_PEOPLE_FILE, "a", encoding="utf-8") as file:
-            file.write(f"{nickname} - {group}\n")
+    # Добавляем ник в общий список
+    with open(ALL_PEOPLE_FILE, "a", encoding="utf-8") as file:
+        file.write(f"{nickname} - {group}\n")
 
     print(f"Ник '{nickname}' сохранён в группе '{group}'.")
-
 
 # Найти ник
 def find_nickname():
     nickname = input("Введите никнейм для поиска: ").strip()
 
-    with open(ALL_PEOPLE_FILE, "r", encoding="utf-8") as file:
-        lines = file.readlines()
-
     found = False
-    for line in lines:
-        if nickname in line:
-            print(f"Ник '{nickname}' найден в группе '{line.split(' - ')[-1].strip()}'.")
-            found = True
-            break
+
+    # Поиск в админах
+    if os.path.exists(ADMIN_FILE):
+        with open(ADMIN_FILE, "r", encoding="utf-8") as file:
+            admins = file.readlines()
+            for admin in admins:
+                if nickname.strip() == admin.strip():
+                    print(f"Ник '{nickname}' найден в группе 'Администраторы'.")
+                    found = True
+                    break
+
+    # Поиск в участниках
+    if not found and os.path.exists(PEOPLE_FILE):
+        with open(PEOPLE_FILE, "r", encoding="utf-8") as file:
+            people = file.readlines()
+            for person in people:
+                if nickname.strip() == person.strip():
+                    print(f"Ник '{nickname}' найден в группе 'Участники'.")
+                    found = True
+                    break
+
+    # Поиск в черном списке
+    if not found and os.path.exists(BLACK_PEOPLE_FILE):
+        with open(BLACK_PEOPLE_FILE, "r", encoding="utf-8") as file:
+            black_list = file.readlines()
+            for black in black_list:
+                if nickname.strip() == black.strip():
+                    print(f"Ник '{nickname}' найден в группе 'Черный список'.")
+                    found = True
+                    break
 
     if not found:
         print("Такого участника нету.")
-
 
 # Удалить ник
 def delete_nickname():
     nickname = input("Введите никнейм для удаления: ").strip()
 
-    with open(ALL_PEOPLE_FILE, "r", encoding="utf-8") as file:
-        lines = file.readlines()
+    found = False
+    # Чтение всех файлов для удаления
+    for file_name, group in [(ADMIN_FILE, "Администраторы"),
+                             (PEOPLE_FILE, "Участники"),
+                             (BLACK_PEOPLE_FILE, "Черный список")]:
+        with open(file_name, "r", encoding="utf-8") as file:
+            lines = file.readlines()
 
-    with open(ALL_PEOPLE_FILE, "w", encoding="utf-8") as file:
-        found = False
-        for line in lines:
-            if nickname not in line:
-                file.write(line)
-            else:
-                found = True
-                # Записываем в историю
-                add_history(f"Удалён ник '{nickname}'.")
+        with open(file_name, "w", encoding="utf-8") as file:
+            for line in lines:
+                if nickname != line.strip():
+                    file.write(line)
+                else:
+                    found = True
+                    add_history(f"Удалён ник '{nickname}' из группы '{group}'.")
 
-        if found:
-            print(f"Ник '{nickname}' удалён.")
-        else:
-            print("Такого ника нету.")
-
+    if found:
+        print(f"Ник '{nickname}' удалён.")
+    else:
+        print("Такого ника нету.")
 
 # Удалить историю
 def delete_history():
@@ -148,7 +174,6 @@ def delete_history():
         print("История удалена.")
     else:
         print("Неверный пароль.")
-
 
 # Главное меню
 def main():
@@ -184,7 +209,6 @@ def main():
             break
         else:
             print("Некорректный ввод, попробуйте снова.")
-
 
 # Запуск программы
 if __name__ == "__main__":
