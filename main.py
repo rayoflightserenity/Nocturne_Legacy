@@ -10,12 +10,10 @@ PEOPLE_FILE = "people.txt"  # Участники
 # Доступные группы
 AVAILABLE_GROUPS = ["Администраторы", "Участники", "Черный список"]
 
-
 # Функция для добавления истории
 def add_history(action):
     with open(HISTORY_FILE, "a", encoding="utf-8") as file:
         file.write(action + "\n")
-
 
 # Показать историю действий
 def show_history():
@@ -31,7 +29,6 @@ def show_history():
     else:
         print("История еще не была записана.")
 
-
 # Показать весь список ников
 def show_all_nicknames():
     print("\nВесь список ников:")
@@ -45,7 +42,6 @@ def show_all_nicknames():
                 print("Список пользователей пуст.")
     else:
         print("Нет сохраненных пользователей.")
-
 
 # Сортировка списка ников
 def sort_nicknames():
@@ -62,14 +58,12 @@ def sort_nicknames():
     else:
         print("Нет сохраненных пользователей.")
 
-
 # Функция проверки, содержит ли ник знак "@"
 def is_valid_nickname(nickname):
     if "@" not in nickname:
         print("Никнейм должен содержать символ '@'. Попробуйте снова.")
         return False
     return True
-
 
 # Проверка, существует ли уже ник в группе
 def is_nickname_exists(nickname, group_file):
@@ -79,7 +73,6 @@ def is_nickname_exists(nickname, group_file):
             if existing_nick.strip() == nickname:
                 return True
     return False
-
 
 # Добавить ник в группу
 def add_nickname():
@@ -133,7 +126,6 @@ def add_nickname():
 
     print(f"Ник '{nickname}' сохранён в группе '{group}'.")
 
-
 # Найти ник
 def find_nickname():
     nickname = input("Введите никнейм для поиска: ").strip()
@@ -176,7 +168,6 @@ def find_nickname():
     if not found:
         print("Такого участника нету.")
 
-
 # Удалить ник
 def delete_nickname():
     nickname = input("Введите никнейм для удаления: ").strip()
@@ -205,6 +196,26 @@ def delete_nickname():
     else:
         print("Такого ника нету.")
 
+# Проверка и запись удаления никнейма вручную
+def check_manual_deletions():
+    # Проверяем все файлы на наличие изменений (если ник был удалён вручную)
+    all_files = [ADMIN_FILE, PEOPLE_FILE, BLACK_PEOPLE_FILE]
+    for file_name in all_files:
+        with open(file_name, "r", encoding="utf-8") as file:
+            current_nicks = set(line.strip() for line in file.readlines())
+
+        # Проверка всех записей в истории
+        if os.path.exists(HISTORY_FILE):
+            with open(HISTORY_FILE, "r", encoding="utf-8") as file:
+                history_lines = file.readlines()
+
+            for line in history_lines:
+                action = line.strip()
+                if "Добавлен" in action:
+                    nickname = action.split("'")[1]
+                    # Если ник есть в истории, но нет в файле — это значит, что его удалили вручную
+                    if nickname not in current_nicks:
+                        add_history(f"Ник '{nickname}' был удалён вручную из файла '{file_name}'.")
 
 # Удалить историю
 def delete_history():
@@ -216,10 +227,11 @@ def delete_history():
     else:
         print("Неверный пароль.")
 
-
 # Главное меню
 def main():
     while True:
+        check_manual_deletions()  # Проверяем вручную удалённые ники
+
         print("\nВыберите действие:")
         print("1. Добавить ник")
         print("2. Найти ник")
@@ -251,7 +263,6 @@ def main():
             break
         else:
             print("Некорректный ввод, попробуйте снова.")
-
 
 # Запуск программы
 if __name__ == "__main__":
