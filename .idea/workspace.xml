@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9fc5ab1a-9515-4e13-9a83-62ffdc00df2e" name="Changes" comment="Теперь программа включает новую опцию для удаления всей информации о никах. При выборе этой опции программа потребует ввести пароль (&quot;0000&quot;), и если пароль правильный, удалит все файлы, содержащие информацию о пользователях.&#10;&#10;новая директория" />
+    <list default="true" id="9fc5ab1a-9515-4e13-9a83-62ffdc00df2e" name="Changes" comment="Теперь программа включает новую опцию для удаления всей информации о никах. При выборе этой опции программа потребует ввести пароль (&quot;0000&quot;), и если пароль правильный, удалит все файлы, содержащие информацию о пользователях.&#10;&#10;новая директория">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -134,7 +136,15 @@
       <option name="project" value="LOCAL" />
       <updated>1740767598514</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Теперь программа включает новую опцию для удаления всей информации о никах. При выборе этой опции программа потребует ввести пароль (&quot;0000&quot;), и если пароль правильный, удалит все файлы, содержащие информацию о пользователях.&#10;&#10;новая директория">
+      <option name="closed" value="true" />
+      <created>1740768297175</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1740768297175</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
