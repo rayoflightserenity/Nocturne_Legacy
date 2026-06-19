@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9fc5ab1a-9515-4e13-9a83-62ffdc00df2e" name="Changes" comment="перший коміт" />
+    <list default="true" id="9fc5ab1a-9515-4e13-9a83-62ffdc00df2e" name="Changes" comment="другий коміт" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,7 +20,20 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "rayoflightserenity"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/rayoflightserenity/Nocturne_Legacy.git",
+    "accountId": "5cbf1e3b-e568-4c72-bb79-3f54fa929cde"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
 }</component>
@@ -30,16 +43,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Пайтон/репозиторій/Algorithms and data structures&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Python.main.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "D:/Пайтон/репозиторій/Algorithms and data structures"
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Пайтон\проекти\Instagram\Група\Nocturne_Legacy\Old_code" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -168,7 +186,23 @@
       <option name="project" value="LOCAL" />
       <updated>1781884112284</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="перший коміт">
+      <option name="closed" value="true" />
+      <created>1781884184274</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1781884184274</updated>
+    </task>
+    <task id="LOCAL-00016" summary="другий коміт">
+      <option name="closed" value="true" />
+      <created>1781886400114</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1781886400114</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -182,6 +216,7 @@
     <MESSAGE value="Теперь программа включает новую опцию для удаления всей информации о никах. При выборе этой опции программа потребует ввести пароль (&quot;0000&quot;), и если пароль правильный, удалит все файлы, содержащие информацию о пользователях." />
     <MESSAGE value="Теперь программа включает новую опцию для удаления всей информации о никах. При выборе этой опции программа потребует ввести пароль (&quot;0000&quot;), и если пароль правильный, удалит все файлы, содержащие информацию о пользователях.&#10;&#10;новая директория" />
     <MESSAGE value="перший коміт" />
-    <option name="LAST_COMMIT_MESSAGE" value="перший коміт" />
+    <MESSAGE value="другий коміт" />
+    <option name="LAST_COMMIT_MESSAGE" value="другий коміт" />
   </component>
 </project>
